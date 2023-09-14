@@ -1,0 +1,41 @@
+<% if user_signed_in? %>
+<table class="table table-striped table-bordered table-hover">
+  <thead class= "thead-dark">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Twitter</th>
+      <th>User_id</th>
+      <th> </th>
+    </tr>
+  </thead>
+
+< <tbody>
+    <% @friends.each do |friend| %>
+      <% if friend.user == current_user %>
+        <td><%= link_to friend.first_name + " " + friend.last_name, friend %></td>
+        <td><%= friend.email %></td>
+        <td><%= friend.phone %></td>
+        <td><%= friend.twitter %></td>
+       <td><%= button_to 'Delete', friend, class: "btn btn-outline-danger btn-sm", method: :delete, form: {data: {turbo_confirm: "Are you sure? " + friend.first_name + " will be deleted from your friends list!"}}%></td>
+  </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "New friend", new_friend_path, class:"btn btn-secondary" %>
+
+<% else %>
+
+<div class="card">
+  <div class="card-header">
+    <h4>A Place to List your Friends<h4>
+  </div>
+  <div class="card-body">
+    <h5>This is a simple app where you can create and manage a list of your friends. The list is tied to the user and only allows authenticated users to view and edit your list of friends.<h5>
+  </div>
+</div>
+
+<% end %>
